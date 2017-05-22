@@ -1,4 +1,4 @@
-package Other;
+package com.project.verbosetech.busdriverapp.Other;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,15 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.project.verbosetech.busdriverapp.Models.Student;
 import com.project.verbosetech.busdriverapp.R;
 
 import java.util.List;
-
-import Models.Student;
 
 /**
  * Created by this pc on 22-05-17.
@@ -38,6 +38,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         TextView father_contact;
         TextView mother_contact;
         ImageView image;
+        RelativeLayout expandArea;
 
         public MyHolder(View itemView)
         {
@@ -50,6 +51,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
             this.father_contact=(TextView)itemView.findViewById(R.id.father_contact_no);
             this.mother_contact=(TextView)itemView.findViewById(R.id.mother_contact_no);
             this.image=(ImageView)itemView.findViewById(R.id.image);
+            this.expandArea=(RelativeLayout)itemView.findViewById(R.id.expandArea);
         }
     }
 
@@ -67,11 +69,12 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
                 .inflate(R.layout.student_bus_card, parent, false);
         MyHolder myNewsHolder=new MyHolder(view);
         re = (RecyclerView)parent.findViewById(R.id.bus_attendance_grid);
+        view.setTag(myNewsHolder);
         return myNewsHolder;
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, final int position) {
+    public void onBindViewHolder(final MyHolder holder, final int position) {
 
         TextView name = holder.name;
         TextView class_sec = holder.class_section;
@@ -89,23 +92,23 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         if(p!=null) {
 
             Glide.with(context).load(dataSet.get(position).getImage())
+                    .dontAnimate()
                     .centerCrop()
                     .crossFade()
                     .thumbnail(0.5f)
-                    .override(150,150)
+                    .override(500,500)
                     .bitmapTransform(new CircleTransform(context))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(image);
 
         }
+
         class_sec.setText(dataSet.get(position).getClass_sec());
         address.setText(dataSet.get(position).getAddress());
         father_name.setText(dataSet.get(position).getFather_name());
         mother_name.setText(dataSet.get(position).getMother_name());
         father_contact.setText(dataSet.get(position).getFather_contact());
         mother_contact.setText(dataSet.get(position).getMother_contact());
-
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +119,38 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
             }
         });
 
+        Log.e("Value",dataSet.get(position).isChecked+"");
+
+        if (dataSet.get(position).isChecked == true) {
+            holder.expandArea.setVisibility(View.VISIBLE);
+        } else {
+            holder.expandArea.setVisibility(View.GONE);
+        }
+
+        onExpand( holder.itemView, context, position);
+
+    }
+
+    private void onExpand(View view, final Context mContext, final int position) {
+        view.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (dataSet.get(position).isChecked!= true) {
+                            dataSet.get(position).isChecked=true;
+                            re.scrollToPosition(position);
+                        }
+
+                        else {
+                            dataSet.get(position).isChecked=false;
+                            re.scrollToPosition(position);
+                        }
+                        notifyItemChanged(position);
+
+                    }
+                }
+
+        );
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.project.verbosetech.busdriverapp;
+package com.project.verbosetech.busdriverapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+
+import com.project.verbosetech.busdriverapp.R;
 
 /**
  * Created by this pc on 22-05-17.
@@ -33,8 +35,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                startActivity(new Intent(SignInActivity.this,BusAttendanceActivity.class));
-
+                startActivity(new Intent(SignInActivity.this,MainActivity.class));
+                finish();
             }
         });
     }

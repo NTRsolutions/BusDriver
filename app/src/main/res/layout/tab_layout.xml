@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tab_host"
-            android:visibility="gone">
+            android:background="#ad7123">
 
         </android.support.design.widget.TabLayout>
 
@@ -24,17 +22,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_below="@+id/tab_host"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bus_attendance_grid"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/tab_host"
-            >
 
-        </android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>
-</RelativeLayout>

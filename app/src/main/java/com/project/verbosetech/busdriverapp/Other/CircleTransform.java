@@ -1,4 +1,4 @@
-package Other;
+package com.project.verbosetech.busdriverapp.Other;
 
 /**
  * Created by this pc on 16-05-17.

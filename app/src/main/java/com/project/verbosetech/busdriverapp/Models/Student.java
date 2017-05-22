@@ -1,4 +1,4 @@
-package Models;
+package com.project.verbosetech.busdriverapp.Models;
 
 /**
  * Created by this pc on 22-05-17.
@@ -14,6 +14,8 @@ public class Student {
     String father_contact;
     String mother_contact;
     String image;
+    public Boolean isChecked=false;
+
 
     public Student(String name, String class_sec, String address, String father_name, String mother_name, String father_contact, String mother_contact, String image) {
         this.name = name;
