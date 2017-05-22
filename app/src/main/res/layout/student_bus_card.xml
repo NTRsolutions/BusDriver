@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content">
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bus_card"
+    app:cardCornerRadius="10dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="6dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/imageview_background"
+            android:layout_margin="15dp"
+            android:id="@+id/image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sachin Parekh"
+            android:id="@+id/name"
+            android:layout_toRightOf="@+id/image"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10th Standard B Division"
+            android:id="@+id/class_section"
+            android:layout_toRightOf="@+id/image"
+            android:layout_below="@+id/name"
+            android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Near Sahara Circle,Old Street,New Delhi"
+            android:id="@+id/Address"
+            android:layout_toRightOf="@+id/image"
+            android:layout_below="@+id/class_section"
+            android:textColor="#7d7d7d"
+            android:layout_marginTop="5dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Picked"
+            android:textAllCaps="false"
+            android:background="@drawable/picked_droped_bckgrnd"
+            android:textColor="#fff"
+            android:minHeight="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_near_me_grey_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/Address"
+            android:layout_marginRight="25dp"
+            />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bus_card"
+        android:padding="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/buscard_layout_bckgrnd"
+        android:layout_marginTop="-12dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="90"
+            android:id="@+id/layout1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Rajesh Roy"
+            android:id="@+id/father_name"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_weight="30"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/father_contact_no"
+            android:text="+91 987 654 3210"
+            android:layout_weight="50"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_local_phone_grey_24dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/phone1"
+            android:layout_weight="10"
+
+            />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Father"
+            android:id="@+id/relation"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="-1dp"
+            android:layout_below="@+id/layout1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/layout1"
+            android:id="@+id/layout2"
+            android:layout_marginTop="15dp"
+            android:weightSum="90">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Jyoti Roy"
+            android:layout_below="@+id/relation"
+            android:id="@+id/mother_name"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="30"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+91 987 654 3210"
+            android:layout_below="@+id/relation"
+            android:layout_marginTop="15dp"
+            android:layout_weight="50"
+            android:id="@+id/mother_contact_no"
+            />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_local_phone_grey_24dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/phone2"
+            android:layout_weight="10"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mother"
+            android:id="@+id/mrelation"
+            android:layout_below="@+id/layout2"
+            android:layout_marginTop="-1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

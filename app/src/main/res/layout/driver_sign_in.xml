@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/title_bar"
+            android:background="@color/colorPrimary"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:src="@drawable/logo"
+                    android:id="@+id/logo"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCHOOL BUS TRACKER "
+                    android:layout_toRightOf="@+id/logo"
+                    android:layout_centerVertical="true"
+                    android:textColor="#fff"
+                    android:textSize="15dp"
+                    android:scaleY="1.3"
+                    android:layout_marginLeft="20dp"/>
+            </RelativeLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign_now"
+        android:layout_below="@id/appbar"
+        android:text="Sign in Now"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enter_id"
+        android:layout_below="@id/sign_now"
+        android:text="Enter Driver ID"
+        android:layout_marginLeft="30dp"
+        android:textSize="18dp"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="mahesh0101"
+        android:layout_toRightOf="@+id/enter_id"
+        android:layout_below="@+id/sign_now"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="25dp"
+        android:id="@+id/editname"
+        android:paddingLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/select_bus"
+        android:text="Select Bus"
+        android:textSize="18dp"
+        android:layout_below="@+id/editname"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@+id/bus_number"
+
+        />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editname"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:id="@+id/bus_number"
+        android:layout_toRightOf="@+id/enter_id"
+        android:layout_marginLeft="15dp"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        app:backgroundTint="#7d7d7d">
+    </android.support.v7.widget.AppCompatSpinner>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign_in"
+        android:layout_below="@+id/bus_number"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        app:srcCompat="@drawable/arrow"
+        android:background="@drawable/sign_in_bckgrnd"
+        android:paddingRight="50dp"
+        android:paddingLeft="50dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        />
+
+
+</RelativeLayout>

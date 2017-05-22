@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BusDriverApp</string>
+
+
+        <string-array name="spinner_array">
+            <item>DL 06 XX 0101</item>
+            <item>DL 06 XX 0101</item>
+            <item>DL 06 XX 0101</item>
+            <item>DL 06 XX 0101</item>
+            <item>DL 06 XX 0101</item>
+        </string-array>
+
+</resources>
