@@ -22,6 +22,8 @@ import com.project.verbosetech.busdriverapp.Fragment.HomeFragment;
 import com.project.verbosetech.busdriverapp.Fragment.TabFragment;
 import com.project.verbosetech.busdriverapp.R;
 
+import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_brown_24dp;
+
 /**
  * Created by this pc on 23-05-17.
  */
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     // flag to load home fragment when user presses back key
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
+    private Menu menu;
 
 
     @Override
@@ -266,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.main_menu,menu);
         return true;
     }
@@ -275,6 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId()==R.id.filter)
         {
+            menu.getItem(1).setIcon(getResources().getDrawable(ic_filter_list_brown_24dp));
             Fragment fragment = new TabFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,

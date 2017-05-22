@@ -11,7 +11,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tab_host"
-            android:background="#ad7123">
+            android:background="#ad7123"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
         </android.support.design.widget.TabLayout>
 

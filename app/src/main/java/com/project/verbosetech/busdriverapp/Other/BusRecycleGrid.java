@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,10 @@ import com.project.verbosetech.busdriverapp.R;
 
 import java.util.List;
 
+import static com.project.verbosetech.busdriverapp.R.drawable.ic_undo_grey_24dp;
+import static com.project.verbosetech.busdriverapp.R.drawable.picked_droped_bckgrnd;
+import static com.project.verbosetech.busdriverapp.R.drawable.undo_button_background;
+
 /**
  * Created by this pc on 22-05-17.
  */
@@ -27,6 +32,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
     private List<Student> dataSet ;
     public Context context=null;
     VenueAdapterClickCallbacks venueAdapterClickCallbacks;
+    PrefManager pref;
 
     public class MyHolder extends RecyclerView.ViewHolder
     {
@@ -39,6 +45,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         TextView mother_contact;
         ImageView image;
         RelativeLayout expandArea;
+        Button picked;
 
         public MyHolder(View itemView)
         {
@@ -52,6 +59,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
             this.mother_contact=(TextView)itemView.findViewById(R.id.mother_contact_no);
             this.image=(ImageView)itemView.findViewById(R.id.image);
             this.expandArea=(RelativeLayout)itemView.findViewById(R.id.expandArea);
+            this.picked=(Button)itemView.findViewById(R.id.picked);
         }
     }
 
@@ -61,6 +69,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         this.dataSet = data;
         this.venueAdapterClickCallbacks=venueAdapterClickCallback;
         context=c;
+        pref=new PrefManager(context);
     }
 
     @Override
@@ -84,6 +93,27 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         TextView father_contact = holder.father_contact;
         TextView mother_contact = holder.mother_contact;
         ImageView image=holder.image;
+        final Button picked=holder.picked;
+
+        picked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(picked.getText().toString().equals("Picked")){
+                picked.setCompoundDrawablesWithIntrinsicBounds( ic_undo_grey_24dp, 0, 0, 0);
+                picked.setTextColor(context.getResources().getColor(R.color.grey));
+                picked.setBackground(context.getResources().getDrawable(undo_button_background));
+                picked.setText("Undo");}
+                else
+                {
+                    picked.setCompoundDrawablesWithIntrinsicBounds( 0, 0, 0, 0);
+                    picked.setTextColor(context.getResources().getColor(R.color.splashTitle));
+                    picked.setBackground(context.getResources().getDrawable(picked_droped_bckgrnd));
+                    picked.setText("Picked");
+                }
+
+            }
+        });
 
         name.setText(dataSet.get(position).getName());
         String p=dataSet.get(position).getImage();
