@@ -50,7 +50,7 @@ public class PrefManager {
     }
 
 
-    public void setButton(String status) {
+    public void setFilter(String status) {
 
         editor.putString("status", status);
         editor.commit();
@@ -63,7 +63,7 @@ public class PrefManager {
     }
 
 
-    public String getButton() {
+    public String getFilter() {
         return pref.getString("status", null);
     }
 

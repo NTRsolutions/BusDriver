@@ -1,15 +1,21 @@
 package com.project.verbosetech.busdriverapp.Activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,15 +26,22 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.project.verbosetech.busdriverapp.Fragment.HomeFragment;
 import com.project.verbosetech.busdriverapp.Fragment.TabFragment;
+import com.project.verbosetech.busdriverapp.Models.Student;
+import com.project.verbosetech.busdriverapp.Other.BusRecycleGrid;
+import com.project.verbosetech.busdriverapp.Other.PrefManager;
 import com.project.verbosetech.busdriverapp.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_brown_24dp;
+import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_white_24dp;
 
 /**
  * Created by this pc on 23-05-17.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -36,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgNavHeaderBg, filterbutton;
     private TextView txtName, txtWebsite;
     private Toolbar toolbar;
+    private static ArrayList<Student> data;
+    private static BusRecycleGrid adapter;
 
     // urls to load navigation header background image
     // and profile image
@@ -56,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean shouldLoadHomeFragOnBackPress = true;
     private Handler mHandler;
     private Menu menu;
+    PrefManager pref;
+
+    String image_address = "http://media.gettyimages.com/photos/male-high-school-student-portrait-picture-id98680202?s=170667a";
 
 
     @Override
@@ -69,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        pref=new PrefManager(getApplicationContext());
 
 
         // Navigation view header
@@ -92,6 +111,12 @@ public class MainActivity extends AppCompatActivity {
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
+
+
+        data=new ArrayList<>();
+        data.add(new Student("Abhimanyu Khurana ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        data.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+
     }
 
     /***
@@ -271,6 +296,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
         getMenuInflater().inflate(R.menu.main_menu,menu);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -279,20 +306,86 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId()==R.id.filter)
         {
-            menu.getItem(1).setIcon(getResources().getDrawable(ic_filter_list_brown_24dp));
-            Fragment fragment = new TabFragment();
+            if(pref.getFilter()==null){
+                menu.getItem(1).setIcon(getResources().getDrawable(ic_filter_list_brown_24dp));
+                Fragment fragment = new TabFragment();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    // Inflate transitions to apply
+                    Transition changeTransform = TransitionInflater.from(this).
+                            inflateTransition(R.transition.change_image_transform);
+                    Transition explodeTransform = TransitionInflater.from(this).
+                            inflateTransition(android.R.transition.explode);
+
+                    // Setup exit transition on first fragment
+                    getHomeFragment().setSharedElementReturnTransition(changeTransform);
+                    getHomeFragment().setExitTransition(explodeTransform);
+
+                    // Setup enter transition on second fragment
+                    fragment.setSharedElementEnterTransition(changeTransform);
+                    fragment.setEnterTransition(explodeTransform);
+
+                    TabLayout tabLayout=(TabLayout)findViewById(R.id.tab_host);
+
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
                     android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
+            fragmentTransaction.replace(R.id.frame, fragment).addSharedElement(tabLayout,tabLayout.getTransitionName());
             fragmentTransaction.commitAllowingStateLoss();
+            pref.setFilter("1");
+            }
+
         }
-        else if (item.getItemId()==R.id.search)
+
+        else{
+
+            menu.getItem(1).setIcon(getResources().getDrawable(ic_filter_list_white_24dp));
+            Fragment fragment = new HomeFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out);
+            fragmentTransaction.replace(R.id.frame, fragment);
+            fragmentTransaction.commitAllowingStateLoss();
+            pref.setFilter(null);
+            }
+        }
+
+        else if (item.getItemId()==R.id.action_search)
         {
+
 
         }
         return true;
 
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        final List<Student> filteredModelList = filter(data, newText);
+        adapter=new BusRecycleGrid(getApplicationContext(), data, new BusRecycleGrid.VenueAdapterClickCallbacks() {
+            @Override
+            public void onCardClick(String p) {
+            }
+        });
+        adapter.setFilter(filteredModelList);
+        return true;
+    }
+
+    private List<Student> filter(List<Student> models, String query) {
+        query = query.toLowerCase();
+
+        final List<Student> filteredModelList = new ArrayList<>();
+        for (Student model : models) {
+            final String text = model.getName().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
+    }
 }

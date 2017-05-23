@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.project.verbosetech.busdriverapp.Models.Student;
 import com.project.verbosetech.busdriverapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.project.verbosetech.busdriverapp.R.drawable.ic_undo_grey_24dp;
@@ -191,6 +192,12 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
     public interface VenueAdapterClickCallbacks {
         void onCardClick( String p);
 
+    }
+
+    public void setFilter(List<Student> Model) {
+        dataSet = new ArrayList<>();
+        dataSet.addAll(Model);
+        notifyDataSetChanged();
     }
 
 

@@ -36,4 +36,11 @@
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="privacy_policy">Privacy Policy</string>
 
+    <string name="activity_image_trans">activity_image_transition</string>
+    <string name="activity_text_trans">activity_text_transition</string>
+    <string name="activity_mixed_trans">activity_mixed_transition</string>
+    <string name="fragment_image_trans">fragment_image_transition</string>
+
+    <string name="search_hint">Hint</string>
+
 </resources>

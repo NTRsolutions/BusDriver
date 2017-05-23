@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.project.verbosetech.busdriverapp.R;
 
@@ -42,8 +41,8 @@ public class TabFragment extends Fragment {
     }
 
     private void createViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFrag(new HomeFragment(), "Tab 1");
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFrag(new All_Fragement(), "Tab 1");
         adapter.addFrag(new PickedFragment(), "Tab 2");
         adapter.addFrag(new AbsentFragment(), "Tab 3");
         viewPager.setAdapter(adapter);
@@ -52,7 +51,6 @@ public class TabFragment extends Fragment {
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
-
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
@@ -80,20 +78,11 @@ public class TabFragment extends Fragment {
 
     private void createTabIcons() {
 
-        TextView tabOne = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabOne.setText("All(24)");
-        //        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_dash26, 0, 0);
-        tabLayout.getTabAt(0).setCustomView(tabOne);
+        tabLayout.getTabAt(0).setText("All(24)");
 
-        TextView tabTwo = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabTwo.setText("Picked(10)");
-        //        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_category, 0, 0);
-        tabLayout.getTabAt(1).setCustomView(tabTwo);
+        tabLayout.getTabAt(1).setText("Picked(10)");
 
-        TextView tabThree = (TextView) LayoutInflater.from(getActivity()).inflate(R.layout.custom_tab, null);
-        tabThree.setText("Absent(02)");
-        //        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_order, 0, 0);
-        tabLayout.getTabAt(2).setCustomView(tabThree);
+        tabLayout.getTabAt(2).setText("Absent(02)");
     }
 
 }
