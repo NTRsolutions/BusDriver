@@ -43,6 +43,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 prefManager.setName(name.getText().toString());
                 prefManager.setBusNo(spinner.getSelectedItem().toString());
+                prefManager.setFilter(null);
                 startActivity(new Intent(SignInActivity.this,MainActivity.class));
                 finish();
             }

@@ -31,6 +31,7 @@ public class All_Fragement extends Fragment {
     List<Student> studentList;
     String image_address = "http://media.gettyimages.com/photos/male-high-school-student-portrait-picture-id98680202?s=170667a";
 
+
     All_Fragement.OnHeadlineSelectedListener mCallback;
 
     // Container Activity must implement this interface

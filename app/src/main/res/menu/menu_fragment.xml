@@ -4,15 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/search"
         android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/filter"
-        android:icon="@drawable/ic_filter_list_white_24dp"
+        android:id="@+id/bfilter"
+        android:icon="@drawable/ic_filter_list_brown_24dp"
         android:title="Message"
         app:showAsAction="ifRoom"/>
 

@@ -37,9 +37,6 @@ import com.project.verbosetech.busdriverapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_brown_24dp;
-import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_white_24dp;
-
 /**
  * Created by this pc on 23-05-17.
  */
@@ -54,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Toolbar toolbar;
     private static ArrayList<Student> data;
     private static BusRecycleGrid adapter;
+    private static BusRecycleGrid adapterToPass0;
+    private static BusRecycleGrid adapterToPass1;
+    private static BusRecycleGrid adapterToPass2;
 
     // urls to load navigation header background image
     // and profile image
@@ -78,14 +78,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     String image_address = "http://media.gettyimages.com/photos/male-high-school-student-portrait-picture-id98680202?s=170667a";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mHandler = new Handler();
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -303,6 +301,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
+        if(pref.getFilter()!=null){
+            MenuItem item= menu.findItem(R.id.search);
+            item.setVisible(false);
+            MenuItem item2= menu.findItem(R.id.bfilter);
+            item2.setVisible(false);
+        }
         getMenuInflater().inflate(R.menu.main_menu,menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setOnQueryTextListener(this);
@@ -312,10 +316,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==R.id.filter)
-        {
-            if(pref.getFilter()==null){
-                menu.getItem(1).setIcon(getResources().getDrawable(ic_filter_list_brown_24dp));
+        if(item.getItemId()==R.id.filter) {
+            if (pref.getFilter() == null) {
                 Fragment fragment = new TabFragment();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     // Inflate transitions to apply
@@ -332,34 +334,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     fragment.setSharedElementEnterTransition(changeTransform);
                     fragment.setEnterTransition(explodeTransform);
 
-                    TabLayout tabLayout=(TabLayout)findViewById(R.id.tab_host);
+                    TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_host);
 
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.frame, fragment).addSharedElement(tabLayout,tabLayout.getTransitionName());
-            fragmentTransaction.commitAllowingStateLoss();
-            pref.setFilter("1");
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                            android.R.anim.fade_out);
+                    fragmentTransaction.replace(R.id.frame, fragment).addSharedElement(tabLayout, tabLayout.getTransitionName());
+                    fragmentTransaction.commitAllowingStateLoss();
+                }
+
             }
-
-        }
-
-        else{
-
-            menu.getItem(1).setIcon(getResources().getDrawable(ic_filter_list_white_24dp));
-            Fragment fragment = new HomeFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out);
-            fragmentTransaction.replace(R.id.frame, fragment);
-            fragmentTransaction.commitAllowingStateLoss();
-            pref.setFilter(null);
-            }
-        }
-
-        else if (item.getItemId()==R.id.action_search)
-        {
-
 
         }
         return true;
@@ -400,16 +384,32 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public void onAllSelected(BusRecycleGrid a) {
-        adapter=a;
+        adapterToPass0=a;
+    }
+
+    public static BusRecycleGrid getAllAdapter() {
+        return adapterToPass0;
+    }
+    public static BusRecycleGrid getPickedAdapter() {
+        return adapterToPass1;
+    }
+    public static BusRecycleGrid getAbsentAdapter() {
+        return adapterToPass2;
     }
 
     @Override
     public void onAbsentSelected(BusRecycleGrid a) {
-        adapter=a;
+        adapterToPass2=a;
     }
 
     @Override
     public void onPickedSelected(BusRecycleGrid a) {
-        adapter=a;
+        adapterToPass1=a;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pref.setFilter(null);
     }
 }
