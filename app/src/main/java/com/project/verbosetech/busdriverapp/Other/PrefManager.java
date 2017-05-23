@@ -62,6 +62,18 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setAdapter(String name) {
+
+        editor.putString("adapter", name);
+        editor.commit();
+    }
+
+    public void setBusNo(String number) {
+
+        editor.putString("number", number);
+        editor.commit();
+    }
+
 
     public String getFilter() {
         return pref.getString("status", null);
@@ -69,6 +81,14 @@ public class PrefManager {
 
     public String getName() {
         return pref.getString("name", null);
+    }
+
+    public String getAdapter() {
+        return pref.getString("adapter", null);
+    }
+
+    public String getBusNo() {
+        return pref.getString("number", null);
     }
 
 

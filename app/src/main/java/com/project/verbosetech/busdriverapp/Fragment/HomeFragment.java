@@ -1,5 +1,6 @@
 package com.project.verbosetech.busdriverapp.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.project.verbosetech.busdriverapp.Models.Student;
 import com.project.verbosetech.busdriverapp.Other.BusRecycleGrid;
+import com.project.verbosetech.busdriverapp.Other.PrefManager;
 import com.project.verbosetech.busdriverapp.R;
 
 import java.util.ArrayList;
@@ -32,6 +34,28 @@ public class HomeFragment extends Fragment {
     List<Student> studentList;
     String image_address = "http://media.gettyimages.com/photos/male-high-school-student-portrait-picture-id98680202?s=170667a";
     Button picked;
+    PrefManager pref;
+    HomeFragment.OnHeadlineSelectedListener mCallback;
+
+    // Container Activity must implement this interface
+    public interface OnHeadlineSelectedListener {
+        void onArticleSelected(BusRecycleGrid a);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnHeadlineSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -41,9 +65,9 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        picked=(Button)view.findViewById(R.id.picked);
-
+        pref=new PrefManager(getActivity());
         getInformation();
+        getAdapter();
         return view;
     }
 
@@ -51,6 +75,11 @@ public class HomeFragment extends Fragment {
     {
         studentList=new ArrayList<>();
         studentList.add(new Student("Abhimanyu Khurana ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
         studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
 
         adapter = new BusRecycleGrid(getActivity(), studentList, new BusRecycleGrid.VenueAdapterClickCallbacks() {
@@ -62,8 +91,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
         recyclerView.setAdapter(adapter);
     }
 
+    public void getAdapter() {
 
+        mCallback.onArticleSelected(adapter);
+    }
 }

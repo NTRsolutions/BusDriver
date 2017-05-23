@@ -1,5 +1,6 @@
 package com.project.verbosetech.busdriverapp.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -30,6 +31,27 @@ public class AbsentFragment extends Fragment {
     List<Student> studentList;
     String image_address = "http://media.gettyimages.com/photos/male-high-school-student-portrait-picture-id98680202?s=170667a";
 
+    AbsentFragment.OnHeadlineSelectedListener mCallback;
+
+    // Container Activity must implement this interface
+    public interface OnHeadlineSelectedListener {
+        void onAbsentSelected(BusRecycleGrid a);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (AbsentFragment.OnHeadlineSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,8 +61,8 @@ public class AbsentFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         getInformation();
+        getAdapter();
         return view;
     }
 
@@ -60,5 +82,10 @@ public class AbsentFragment extends Fragment {
         });
 
         recyclerView.setAdapter(adapter);
+    }
+
+    public void getAdapter() {
+
+        mCallback.onAbsentSelected(adapter);
     }
 }

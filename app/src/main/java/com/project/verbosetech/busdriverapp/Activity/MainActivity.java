@@ -24,7 +24,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.project.verbosetech.busdriverapp.Fragment.AbsentFragment;
+import com.project.verbosetech.busdriverapp.Fragment.All_Fragement;
 import com.project.verbosetech.busdriverapp.Fragment.HomeFragment;
+import com.project.verbosetech.busdriverapp.Fragment.PickedFragment;
 import com.project.verbosetech.busdriverapp.Fragment.TabFragment;
 import com.project.verbosetech.busdriverapp.Models.Student;
 import com.project.verbosetech.busdriverapp.Other.BusRecycleGrid;
@@ -41,7 +44,7 @@ import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_whi
  * Created by this pc on 23-05-17.
  */
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,HomeFragment.OnHeadlineSelectedListener,All_Fragement.OnHeadlineSelectedListener,PickedFragment.OnHeadlineSelectedListener,AbsentFragment.OnHeadlineSelectedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-        pref=new PrefManager(getApplicationContext());
+        pref = new PrefManager(getApplicationContext());
 
 
         // Navigation view header
@@ -113,9 +116,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
 
-        data=new ArrayList<>();
-        data.add(new Student("Abhimanyu Khurana ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        data.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+        data = new ArrayList<>();
+        data.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
 
     }
 
@@ -126,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
      */
     private void loadNavHeader() {
         // name, website
-        txtName.setText("Mahesh Prajapati");
+        txtName.setText(pref.getName());
         txtWebsite.setText("Driver");
 
         // loading header background image
@@ -197,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void setToolbarTitle() {
-        getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+        getSupportActionBar().setTitle(pref.getBusNo());
     }
 
     private void selectNavMenu() {
@@ -367,11 +375,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextChange(String newText) {
 
         final List<Student> filteredModelList = filter(data, newText);
-        adapter=new BusRecycleGrid(getApplicationContext(), data, new BusRecycleGrid.VenueAdapterClickCallbacks() {
-            @Override
-            public void onCardClick(String p) {
-            }
-        });
         adapter.setFilter(filteredModelList);
         return true;
     }
@@ -387,5 +390,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
         return filteredModelList;
+    }
+
+
+    @Override
+    public void onArticleSelected(BusRecycleGrid a) {
+        adapter=a;
+    }
+
+    @Override
+    public void onAllSelected(BusRecycleGrid a) {
+        adapter=a;
+    }
+
+    @Override
+    public void onAbsentSelected(BusRecycleGrid a) {
+        adapter=a;
+    }
+
+    @Override
+    public void onPickedSelected(BusRecycleGrid a) {
+        adapter=a;
     }
 }
