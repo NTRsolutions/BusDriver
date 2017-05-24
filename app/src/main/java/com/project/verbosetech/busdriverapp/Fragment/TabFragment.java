@@ -154,7 +154,7 @@ public class TabFragment extends Fragment implements SearchView.OnQueryTextListe
         MenuItem item2= menu.findItem(R.id.filter);
         item2.setVisible(false);
         inflater.inflate(R.menu.menu_fragment,menu);
-        pref.setFilter("1");
+//        pref.setFilter("1");
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
         searchView.setOnQueryTextListener(this);
         super.onCreateOptionsMenu(menu, inflater);

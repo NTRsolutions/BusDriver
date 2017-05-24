@@ -301,12 +301,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-        if(pref.getFilter()!=null){
-            MenuItem item= menu.findItem(R.id.search);
-            item.setVisible(false);
-            MenuItem item2= menu.findItem(R.id.bfilter);
-            item2.setVisible(false);
-        }
+//        if(pref.getFilter()!=null){
+//            MenuItem item= menu.findItem(R.id.search);
+//            item.setVisible(false);
+//            MenuItem item2= menu.findItem(R.id.bfilter);
+//            item2.setVisible(false);
+//        }
         getMenuInflater().inflate(R.menu.main_menu,menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setOnQueryTextListener(this);
@@ -317,7 +317,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId()==R.id.filter) {
-            if (pref.getFilter() == null) {
+//            if (pref.getFilter() == null)
+                {
                 Fragment fragment = new TabFragment();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     // Inflate transitions to apply
@@ -341,12 +342,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                             android.R.anim.fade_out);
                     fragmentTransaction.replace(R.id.frame, fragment).addSharedElement(tabLayout, tabLayout.getTransitionName());
                     fragmentTransaction.commitAllowingStateLoss();
+
                 }
 
             }
+            return true;
 
         }
-        return true;
+        else
+        {
+            return  super.onOptionsItemSelected(item);
+        }
+
 
     }
 
