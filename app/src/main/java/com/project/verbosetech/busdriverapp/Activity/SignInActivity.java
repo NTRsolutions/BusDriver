@@ -41,7 +41,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                prefManager.setName(name.getText().toString());
+                prefManager.setName("Mahesh Prajapati");
                 prefManager.setBusNo(spinner.getSelectedItem().toString());
                 prefManager.setFilter(null);
                 startActivity(new Intent(SignInActivity.this,MainActivity.class));

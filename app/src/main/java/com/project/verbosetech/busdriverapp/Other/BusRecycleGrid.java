@@ -19,8 +19,8 @@ import com.project.verbosetech.busdriverapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.project.verbosetech.busdriverapp.R.drawable.ic_undo_grey_24dp;
 import static com.project.verbosetech.busdriverapp.R.drawable.picked_droped_bckgrnd;
+import static com.project.verbosetech.busdriverapp.R.drawable.selector_undo_icon;
 import static com.project.verbosetech.busdriverapp.R.drawable.undo_button_background;
 
 /**
@@ -101,7 +101,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
             public void onClick(View view) {
 
                 if(picked.getText().toString().equals("Picked")){
-                picked.setCompoundDrawablesWithIntrinsicBounds( ic_undo_grey_24dp, 0, 0, 0);
+                picked.setCompoundDrawablesWithIntrinsicBounds( selector_undo_icon, 0, 0, 0);
                 picked.setTextColor(context.getResources().getColor(R.color.grey));
                 picked.setBackground(context.getResources().getDrawable(undo_button_background));
                 picked.setText("Undo");}
@@ -120,12 +120,12 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         String p=dataSet.get(position).getImage();
 
         Log.e("Imageeeee",p);
+
         if(p!=null) {
 
             Glide.with(context).load(dataSet.get(position).getImage())
                     .dontAnimate()
                     .centerCrop()
-                    .crossFade()
                     .thumbnail(0.5f)
                     .override(500,500)
                     .bitmapTransform(new CircleTransform(context))
