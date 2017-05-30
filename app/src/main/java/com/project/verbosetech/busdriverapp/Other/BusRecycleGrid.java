@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,7 +46,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         TextView father_contact;
         TextView mother_contact;
         ImageView image;
-        RelativeLayout expandArea;
+        LinearLayout expandArea;
         Button picked;
 
         public MyHolder(View itemView)
@@ -59,7 +60,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
             this.father_contact=(TextView)itemView.findViewById(R.id.father_contact_no);
             this.mother_contact=(TextView)itemView.findViewById(R.id.mother_contact_no);
             this.image=(ImageView)itemView.findViewById(R.id.image);
-            this.expandArea=(RelativeLayout)itemView.findViewById(R.id.expandArea);
+            this.expandArea=(LinearLayout) itemView.findViewById(R.id.expandArea);
             this.picked=(Button)itemView.findViewById(R.id.picked);
         }
     }
