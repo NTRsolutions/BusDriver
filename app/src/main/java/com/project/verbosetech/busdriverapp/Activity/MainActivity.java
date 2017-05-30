@@ -351,6 +351,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                 }
 
+                else
+                {
+                    TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_host);
+
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                            android.R.anim.fade_out);
+                    fragmentTransaction.replace(R.id.frame, fragment);
+                    fragmentTransaction.commitAllowingStateLoss();
+
+                }
+
             }
             return true;
 
