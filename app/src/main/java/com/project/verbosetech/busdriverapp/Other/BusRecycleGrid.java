@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -105,13 +104,15 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
                 picked.setCompoundDrawablesWithIntrinsicBounds( selector_undo_icon, 0, 0, 0);
                 picked.setTextColor(context.getResources().getColor(R.color.grey));
                 picked.setBackground(context.getResources().getDrawable(undo_button_background));
-                picked.setText("Undo");}
+                picked.setText("Undo");
+                picked.setTextSize(12.0f);}
                 else
                 {
                     picked.setCompoundDrawablesWithIntrinsicBounds( 0, 0, 0, 0);
                     picked.setTextColor(context.getResources().getColor(R.color.splashTitle));
                     picked.setBackground(context.getResources().getDrawable(picked_droped_bckgrnd));
                     picked.setText("Picked");
+                    picked.setTextSize(12.0f);
                 }
 
             }

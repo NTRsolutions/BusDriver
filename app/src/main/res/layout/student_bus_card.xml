@@ -75,7 +75,8 @@
             android:layout_marginRight="15dp"
             android:layout_weight="30"
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/picked"/>
+            android:id="@+id/picked"
+            android:textSize="12sp"/>
 
         </LinearLayout>
 
