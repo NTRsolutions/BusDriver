@@ -26,8 +26,6 @@ import java.util.List;
  */
 
 public class HomeFragment extends Fragment {
-
-
     private View view;
     private RecyclerView.LayoutManager layoutManager;
     BusRecycleGrid adapter;
@@ -63,36 +61,35 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.bus_student_status,container,false);
-        recyclerView=(RecyclerView)view.findViewById(R.id.bus_attendance_grid);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.bus_student_status, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.bus_attendance_grid);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        pref=new PrefManager(getActivity());
+        pref = new PrefManager(getActivity());
         getInformation();
         getAdapter();
         return view;
     }
 
-    public void getInformation()
-    {
-        studentList=new ArrayList<>();
-        studentList.add(new Student("Abhimanyu Khurana ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
-        studentList.add(new Student("Sachin Parekh ","Class 10th B Division","Near Sahar Circle, Old Street, New Delhi","Rajesh Roy","Jyoti Roy","+91 903 335 6708","+91 987 654 3210",image_address));
+    public void getInformation() {
+        studentList = new ArrayList<>();
+        studentList.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+        studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
 
         adapter = new BusRecycleGrid(getActivity(), studentList, new BusRecycleGrid.VenueAdapterClickCallbacks() {
 
             @Override
             public void onCardClick(String p) {
 
-                Toast.makeText(getActivity(),p+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), p + "", Toast.LENGTH_LONG).show();
             }
         });
 

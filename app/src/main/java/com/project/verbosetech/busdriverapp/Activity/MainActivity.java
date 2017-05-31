@@ -42,7 +42,7 @@ import java.util.List;
  * Created by this pc on 23-05-17.
  */
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,HomeFragment.OnHeadlineSelectedListener,All_Fragement.OnHeadlineSelectedListener,PickedFragment.OnHeadlineSelectedListener,AbsentFragment.OnHeadlineSelectedListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, HomeFragment.OnHeadlineSelectedListener, All_Fragement.OnHeadlineSelectedListener, PickedFragment.OnHeadlineSelectedListener, AbsentFragment.OnHeadlineSelectedListener {
 
     private NavigationView navigationView;
     private DrawerLayout drawer;
@@ -177,8 +177,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 // update the main content by replacing fragments
                 Fragment fragment = getHomeFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
                 fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
                 fragmentTransaction.commitAllowingStateLoss();
             }
@@ -313,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //            MenuItem item2= menu.findItem(R.id.bfilter);
 //            item2.setVisible(false);
 //        }
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setOnQueryTextListener(this);
         return true;
@@ -322,9 +321,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(item.getItemId()==R.id.filter) {
+        if (item.getItemId() == R.id.filter) {
 //            if (pref.getFilter() == null)
-                {
+            {
                 Fragment fragment = new TabFragment();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     // Inflate transitions to apply
@@ -349,10 +348,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     fragmentTransaction.replace(R.id.frame, fragment).addSharedElement(tabLayout, tabLayout.getTransitionName());
                     fragmentTransaction.commitAllowingStateLoss();
 
-                }
-
-                else
-                {
+                } else {
                     TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_host);
 
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -366,10 +362,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
             return true;
 
-        }
-        else
-        {
-            return  super.onOptionsItemSelected(item);
+        } else {
+            return super.onOptionsItemSelected(item);
         }
 
 
@@ -404,32 +398,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public void onArticleSelected(BusRecycleGrid a) {
-        adapter=a;
+        adapter = a;
     }
 
     @Override
     public void onAllSelected(BusRecycleGrid a) {
-        adapterToPass0=a;
+        adapterToPass0 = a;
     }
 
     public static BusRecycleGrid getAllAdapter() {
         return adapterToPass0;
     }
+
     public static BusRecycleGrid getPickedAdapter() {
         return adapterToPass1;
     }
+
     public static BusRecycleGrid getAbsentAdapter() {
         return adapterToPass2;
     }
 
     @Override
     public void onAbsentSelected(BusRecycleGrid a) {
-        adapterToPass2=a;
+        adapterToPass2 = a;
     }
 
     @Override
     public void onPickedSelected(BusRecycleGrid a) {
-        adapterToPass1=a;
+        adapterToPass1 = a;
     }
 
     @Override

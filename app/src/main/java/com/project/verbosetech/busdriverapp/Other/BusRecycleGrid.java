@@ -27,16 +27,14 @@ import static com.project.verbosetech.busdriverapp.R.drawable.undo_button_backgr
  * Created by this pc on 22-05-17.
  */
 
-public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder>{
-
+public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder> {
     public RecyclerView re;
-    private List<Student> dataSet ;
-    public Context context=null;
+    private List<Student> dataSet;
+    public Context context = null;
     VenueAdapterClickCallbacks venueAdapterClickCallbacks;
     PrefManager pref;
 
-    public class MyHolder extends RecyclerView.ViewHolder
-    {
+    public class MyHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView class_section;
         TextView address;
@@ -48,37 +46,34 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         LinearLayout expandArea;
         Button picked;
 
-        public MyHolder(View itemView)
-        {
+        public MyHolder(View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.name);
             this.class_section = (TextView) itemView.findViewById(R.id.class_section);
-            this.address=(TextView)itemView.findViewById(R.id.Address);
-            this.father_name=(TextView)itemView.findViewById(R.id.father_name);
-            this.mother_name=(TextView)itemView.findViewById(R.id.mother_name);
-            this.father_contact=(TextView)itemView.findViewById(R.id.father_contact_no);
-            this.mother_contact=(TextView)itemView.findViewById(R.id.mother_contact_no);
-            this.image=(ImageView)itemView.findViewById(R.id.image);
-            this.expandArea=(LinearLayout) itemView.findViewById(R.id.expandArea);
-            this.picked=(Button)itemView.findViewById(R.id.picked);
+            this.address = (TextView) itemView.findViewById(R.id.Address);
+            this.father_name = (TextView) itemView.findViewById(R.id.father_name);
+            this.mother_name = (TextView) itemView.findViewById(R.id.mother_name);
+            this.father_contact = (TextView) itemView.findViewById(R.id.father_contact_no);
+            this.mother_contact = (TextView) itemView.findViewById(R.id.mother_contact_no);
+            this.image = (ImageView) itemView.findViewById(R.id.image);
+            this.expandArea = (LinearLayout) itemView.findViewById(R.id.expandArea);
+            this.picked = (Button) itemView.findViewById(R.id.picked);
         }
     }
 
-    public BusRecycleGrid(Context c, List<Student> data, VenueAdapterClickCallbacks venueAdapterClickCallback)
-    {
+    public BusRecycleGrid(Context c, List<Student> data, VenueAdapterClickCallbacks venueAdapterClickCallback) {
 
         this.dataSet = data;
-        this.venueAdapterClickCallbacks=venueAdapterClickCallback;
-        context=c;
-        pref=new PrefManager(context);
+        this.venueAdapterClickCallbacks = venueAdapterClickCallback;
+        context = c;
+        pref = new PrefManager(context);
     }
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.student_bus_card, parent, false);
-        MyHolder myNewsHolder=new MyHolder(view);
-        re = (RecyclerView)parent.findViewById(R.id.bus_attendance_grid);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_bus_card, parent, false);
+        MyHolder myNewsHolder = new MyHolder(view);
+        re = (RecyclerView) parent.findViewById(R.id.bus_attendance_grid);
         view.setTag(myNewsHolder);
         return myNewsHolder;
     }
@@ -93,22 +88,21 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         TextView mother_name = holder.mother_name;
         TextView father_contact = holder.father_contact;
         TextView mother_contact = holder.mother_contact;
-        ImageView image=holder.image;
-        final Button picked=holder.picked;
+        ImageView image = holder.image;
+        final Button picked = holder.picked;
 
         picked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(picked.getText().toString().equals("Picked")){
-                picked.setCompoundDrawablesWithIntrinsicBounds( selector_undo_icon, 0, 0, 0);
-                picked.setTextColor(context.getResources().getColor(R.color.grey));
-                picked.setBackground(context.getResources().getDrawable(undo_button_background));
-                picked.setText("Undo");
-                picked.setTextSize(12.0f);}
-                else
-                {
-                    picked.setCompoundDrawablesWithIntrinsicBounds( 0, 0, 0, 0);
+                if (picked.getText().toString().equals("Picked")) {
+                    picked.setCompoundDrawablesWithIntrinsicBounds(selector_undo_icon, 0, 0, 0);
+                    picked.setTextColor(context.getResources().getColor(R.color.grey));
+                    picked.setBackground(context.getResources().getDrawable(undo_button_background));
+                    picked.setText("Undo");
+                    picked.setTextSize(12.0f);
+                } else {
+                    picked.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     picked.setTextColor(context.getResources().getColor(R.color.splashTitle));
                     picked.setBackground(context.getResources().getDrawable(picked_droped_bckgrnd));
                     picked.setText("Picked");
@@ -119,17 +113,17 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
         });
 
         name.setText(dataSet.get(position).getName());
-        String p=dataSet.get(position).getImage();
+        String p = dataSet.get(position).getImage();
 
-        Log.e("Imageeeee",p);
+        Log.e("Imageeeee", p);
 
-        if(p!=null) {
+        if (p != null) {
 
             Glide.with(context).load(dataSet.get(position).getImage())
                     .dontAnimate()
                     .centerCrop()
                     .thumbnail(0.5f)
-                    .override(500,500)
+                    .override(500, 500)
                     .bitmapTransform(new CircleTransform(context))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(image);
@@ -152,15 +146,15 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
             }
         });
 
-        Log.e("Value",dataSet.get(position).isChecked+"");
+        Log.e("Value", dataSet.get(position).isChecked + "");
 
-        if (dataSet.get(position).isChecked == true) {
+        if (dataSet.get(position).isChecked) {
             holder.expandArea.setVisibility(View.VISIBLE);
         } else {
             holder.expandArea.setVisibility(View.GONE);
         }
 
-        onExpand( holder.itemView, context, position);
+        onExpand(holder.itemView, context, position);
 
     }
 
@@ -169,13 +163,11 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (dataSet.get(position).isChecked!= true) {
-                            dataSet.get(position).isChecked=true;
+                        if (dataSet.get(position).isChecked != true) {
+                            dataSet.get(position).isChecked = true;
                             re.scrollToPosition(position);
-                        }
-
-                        else {
-                            dataSet.get(position).isChecked=false;
+                        } else {
+                            dataSet.get(position).isChecked = false;
                             re.scrollToPosition(position);
                         }
                         notifyItemChanged(position);
@@ -192,7 +184,7 @@ public class BusRecycleGrid extends RecyclerView.Adapter<BusRecycleGrid.MyHolder
     }
 
     public interface VenueAdapterClickCallbacks {
-        void onCardClick( String p);
+        void onCardClick(String p);
 
     }
 
