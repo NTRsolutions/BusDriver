@@ -26,5 +26,38 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:visibility="gone"
+        android:id="@+id/linear_layout">
+
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tab_host"
+        android:background="#ad7123"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        app:tabSelectedTextColor="#fff"
+        app:tabTextColor="#543511"
+        app:tabIndicatorColor="#ad7123"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        android:transitionName="@string/activity_mixed_trans"
+        android:visibility="visible"
+        >
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="visible" />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

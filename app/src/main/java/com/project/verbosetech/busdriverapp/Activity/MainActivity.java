@@ -1,26 +1,28 @@
 package com.project.verbosetech.busdriverapp.Activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +31,6 @@ import com.project.verbosetech.busdriverapp.Fragment.AbsentFragment;
 import com.project.verbosetech.busdriverapp.Fragment.All_Fragement;
 import com.project.verbosetech.busdriverapp.Fragment.HomeFragment;
 import com.project.verbosetech.busdriverapp.Fragment.PickedFragment;
-import com.project.verbosetech.busdriverapp.Fragment.TabFragment;
 import com.project.verbosetech.busdriverapp.Models.Student;
 import com.project.verbosetech.busdriverapp.Other.BusRecycleGrid;
 import com.project.verbosetech.busdriverapp.Other.PrefManager;
@@ -37,6 +38,9 @@ import com.project.verbosetech.busdriverapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_brown_24dp;
+import static com.project.verbosetech.busdriverapp.R.drawable.ic_filter_list_white_24dp;
 
 /**
  * Created by this pc on 23-05-17.
@@ -76,9 +80,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Handler mHandler;
     private Menu menu;
     PrefManager pref;
+    FrameLayout frameLayout;
+    LinearLayout linearLayout;
 
     String image_address = "http://media.gettyimages.com/photos/male-high-school-student-portrait-picture-id98680202?s=170667a";
 
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -95,6 +104,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         pref = new PrefManager(getApplicationContext());
+
+        frameLayout=(FrameLayout)findViewById(R.id.frame);
+        linearLayout=(LinearLayout)findViewById(R.id.linear_layout);
+
+        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        createViewPager(viewPager);
+
+        tabLayout = (TabLayout)findViewById(R.id.tab_host);
+        tabLayout.setupWithViewPager(viewPager);
+        createTabIcons();
 
 
         // Navigation view header
@@ -118,16 +137,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             CURRENT_TAG = TAG_HOME;
             loadHomeFragment();
         }
-
-
-        data = new ArrayList<>();
-        data.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
-        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
-        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
-        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
-        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
-        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
-        data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
 
     }
 
@@ -307,12 +316,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.menu = menu;
-//        if(pref.getFilter()!=null){
-//            MenuItem item= menu.findItem(R.id.search);
-//            item.setVisible(false);
-//            MenuItem item2= menu.findItem(R.id.bfilter);
-//            item2.setVisible(false);
-//        }
         getMenuInflater().inflate(R.menu.main_menu,menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         searchView.setOnQueryTextListener(this);
@@ -323,57 +326,24 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId()==R.id.filter) {
-//            if (pref.getFilter() == null)
+            if (pref.getFilter() == null)
                 {
-                Fragment fragment = new TabFragment();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    // Inflate transitions to apply
-                    Transition changeTransform = TransitionInflater.from(this).
-                            inflateTransition(R.transition.change_image_transform);
-                    Transition explodeTransform = TransitionInflater.from(this).
-                            inflateTransition(android.R.transition.explode);
-
-                    // Setup exit transition on first fragment
-                    getHomeFragment().setSharedElementReturnTransition(changeTransform);
-                    getHomeFragment().setExitTransition(explodeTransform);
-
-                    // Setup enter transition on second fragment
-                    fragment.setSharedElementEnterTransition(changeTransform);
-                    fragment.setEnterTransition(explodeTransform);
-
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_host);
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                            android.R.anim.fade_out);
-                    fragmentTransaction.replace(R.id.frame, fragment).addSharedElement(tabLayout, tabLayout.getTransitionName());
-                    fragmentTransaction.commitAllowingStateLoss();
-
+                    item.setIcon(ic_filter_list_brown_24dp);
+                    frameLayout.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                    pref.setFilter("1");
                 }
 
                 else
                 {
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_host);
-
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                            android.R.anim.fade_out);
-                    fragmentTransaction.replace(R.id.frame, fragment);
-                    fragmentTransaction.commitAllowingStateLoss();
-
+                    item.setIcon(ic_filter_list_white_24dp);
+                    frameLayout.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                    pref.setFilter(null);
                 }
-
-            }
-            return true;
-
         }
-        else
-        {
-            return  super.onOptionsItemSelected(item);
+        return true;
         }
-
-
-    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -382,6 +352,47 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
+        data=new ArrayList<>();
+        if(pref.getFilter()==null)
+        {
+            data.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+            data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+            data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+            data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+            data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+            data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+            data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+
+
+        }
+        else {
+
+
+            if (viewPager.getCurrentItem() == 0) {
+                data.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                adapter=getAllAdapter();
+            } else if (viewPager.getCurrentItem() == 1) {
+                data.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                adapter=getPickedAdapter();
+            } else {
+
+                data.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                data.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
+                adapter=getAbsentAdapter();
+            }
+
+        }
 
         final List<Student> filteredModelList = filter(data, newText);
         adapter.setFilter(filteredModelList);
@@ -412,6 +423,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapterToPass0=a;
     }
 
+    @Override
+    public void onAbsentSelected(BusRecycleGrid a) {
+        adapterToPass2=a;
+    }
+
+    @Override
+    public void onPickedSelected(BusRecycleGrid a) {
+        adapterToPass1=a;
+    }
+
     public static BusRecycleGrid getAllAdapter() {
         return adapterToPass0;
     }
@@ -423,18 +444,54 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     @Override
-    public void onAbsentSelected(BusRecycleGrid a) {
-        adapterToPass2=a;
-    }
-
-    @Override
-    public void onPickedSelected(BusRecycleGrid a) {
-        adapterToPass1=a;
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         pref.setFilter(null);
+    }
+
+
+    private void createViewPager(ViewPager viewPager) {
+        MainActivity.ViewPagerAdapter adapter = new MainActivity.ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFrag(new All_Fragement(), "All(24)");
+        adapter.addFrag(new PickedFragment(), "Picked(10)");
+        adapter.addFrag(new AbsentFragment(), "Absent(02)");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+    private void createTabIcons() {
+
+        tabLayout.getTabAt(0).setText("All(24)");
+
+        tabLayout.getTabAt(1).setText("Picked(10)");
+
+        tabLayout.getTabAt(2).setText("Absent(02)");
     }
 }
