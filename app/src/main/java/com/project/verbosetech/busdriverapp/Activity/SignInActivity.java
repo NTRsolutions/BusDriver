@@ -17,24 +17,23 @@ import com.project.verbosetech.busdriverapp.R;
  */
 
 public class SignInActivity extends AppCompatActivity {
-
     Spinner spinner;
     ImageButton imageButton;
     PrefManager prefManager;
     EditText name;
 
     @Override
-    protected void onCreate( Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.driver_sign_in);
-        prefManager=new PrefManager(getApplicationContext());
-        name=(EditText)findViewById(R.id.editname);
+        prefManager = new PrefManager(getApplicationContext());
+        name = (EditText) findViewById(R.id.editname);
         spinner = (Spinner) findViewById(R.id.bus_number);
-        imageButton=(ImageButton)findViewById(R.id.sign_in);
+        imageButton = (ImageButton) findViewById(R.id.sign_in);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.spinner_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setPadding(0,spinner.getPaddingTop(),spinner.getPaddingRight(),spinner.getPaddingBottom());
+        spinner.setPadding(0, spinner.getPaddingTop(), spinner.getPaddingRight(), spinner.getPaddingBottom());
         spinner.setAdapter(adapter);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
                 prefManager.setName("Mahesh Prajapati");
                 prefManager.setBusNo(spinner.getSelectedItem().toString());
                 prefManager.setFilter(null);
-                startActivity(new Intent(SignInActivity.this,MainActivity.class));
+                startActivity(new Intent(SignInActivity.this, MainActivity.class));
                 finish();
             }
         });
