@@ -76,6 +76,8 @@ public class HomeFragment extends Fragment {
 
     public void getInformation() {
         studentList = new ArrayList<>();
+
+        //filling the cards with dummy data
         studentList.add(new Student("Abhimanyu Khurana ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
         studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
         studentList.add(new Student("Sachin Parekh ", "Class 10th B Division", "Near Sahar Circle, Old Street, New Delhi", "Rajesh Roy", "Jyoti Roy", "+91 903 335 6708", "+91 987 654 3210", image_address));
